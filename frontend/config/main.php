@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'params' => $params,
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -35,6 +36,15 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@app/themes/'.$params['currentTheme'],
+                'baseUrl' => '@web/themes/'.$params['currentTheme'],
+                'pathMap' => [
+                    '@app/views' => '@app/themes/'.$params['currentTheme'],
+                ],
+            ],
         ],
         /*
         'urlManager' => [

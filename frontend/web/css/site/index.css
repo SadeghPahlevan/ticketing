@@ -1,0 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
+.mySlides {display:none}
+.demo {cursor:pointer}
+

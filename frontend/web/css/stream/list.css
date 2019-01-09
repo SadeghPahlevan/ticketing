@@ -1,0 +1,16 @@
+
+div.add {
+    display: none;
+}
+
+.border-ticket {
+    direction: rtl;
+    border: 1px solid dimgray;
+    padding: 15px;
+}
+
+.border-ticket-expert {
+    color: #0b124b;
+    border: 1px solid #6d8f90;
+    padding: 15px;
+}

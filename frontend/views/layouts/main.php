@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -22,6 +23,10 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
+
+    <script type="text/javascript" src="<?=  Yii::getAlias('@web').'/js/jquery-1.11.0.min.js'?>"> </script>
+    <script type="text/javascript" src="<?=  Yii::getAlias('@web').'/js/jquery-migrate-1.2.1.min.js'?>"> </script>
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -37,9 +42,17 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
+    if (!Yii::$app->user->isGuest) {
+        if (Yii::$app->user->identity->role == 2) {
+            $menuItems[] = ['label' => 'Kartabl', 'url' => ['/stream/kartabl']];
+            $menuItems[] = ['label' => 'done', 'url' => ['/stream/done']];
+        } else {
+            $menuItems[] = ['label' => 'Stream', 'url' => ['/stream/index']];
+        }
+
+
+    }
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

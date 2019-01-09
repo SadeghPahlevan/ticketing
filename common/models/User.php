@@ -26,6 +26,11 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    const ROLE_ADMIN = 1;
+    const ROLE_EXPERT = 2;
+    const ROLE_USER = 3;
+
+
 
     /**
      * {@inheritdoc}
@@ -53,6 +58,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['role', 'default', 'value' => 3] ,
+
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_EXPERT, self::ROLE_ADMIN]],
+
         ];
     }
 
@@ -185,5 +194,42 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /* static function get_user_expert(){
+         $sql = "select * from user WHERE role = 2";
+         $expert = Yii::$app->db->createCommand($sql)->queryAll();
+         return $expert ;
+     } */
+
+    static function get_user_expert(){
+        $expert = User::find()
+            ->where(['role'=>2])
+            ->all();
+        return $expert;
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN])){
+
+            return true;
+        } else {
+
+            return false;
+        }
+
+    }
+    static function get_user_name($id){
+        $username = User::find()
+            ->where(['id' => $id])
+            ->one();
+        return $username ;
+    }
+    static function get_user(){
+        $username = User::find()
+            ->count();
+
+        return $username ;
     }
 }
